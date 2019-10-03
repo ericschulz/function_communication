@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Eric Schulz">
+    <meta charset="utf-8">
+
+
+    <title>Rate game performance</title>
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script> 
+    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script> 
+    <script src='https://cdn.firebase.com/js/client/1.1.1/firebase.js'></script>
+    <script src="js/d3.min.js" charset="utf-8"></script>
+    <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet" type="text/css">
+    <link href="js/bootstrap.css" rel="stylesheet" type="text/css">
+
+ </head>
+     <body>
+ 
+        <div class="container">
+            <div class="row">
+
+                <div id="page1" style="display:block">
+                <br>
+                <p><b><font color="blue">Rate the performance of players in a description game</font></b><p>
+                <p> This study is part of a research project conducted by Eric Schulz, Harvard University. </p>
+                <p> The study asks you to rate the performance of different players playing a pattern description game.</p>
+                <p> Please read the instructions carefully and try to perform as well as you can.</p>
+                <p> If you have any questions, you can contact <font color="blue">ericschulz@fas.harvard.edu</font></p>
+                <button type="button" name="button"; onclick="clickStart('page1', 'page2')"; >Continue</button>
+                <br>
+                </div>
+
+
+                <div id="page2" style="display:none">
+               <br>
+                <p><b><font color="blue">Rate the performance of players in a description game</font></b><p>
+                <p>We would like to invite you to participate in this research project. You should only participate if you want to.</p>
+                <p>We are investigating how people communicate and perceive patterns.</p>
+                <p>The study should not take longer than 15 minutes.</p>
+                <p>You will be paid $2.00 for your participation.</p>
+                <br>
+                <button type="button" name="button"; onclick="clickStart('page2','page3')"; >Agree</button>
+                <br>
+                </div>
+
+                <div id="page3" style="display:none">
+                <br>
+                <p><b><font color="blue">Rate the performance of players in a description game</font></b><p>
+                <p> In this study, you will always see a pattern and a description.</p>
+                <p> The description was produced by a player, who took part in a pattern description game. In this game, the player saw a pattern and then had to describe it. This description was then parsed onto another player who had to redraw the pattern based on the description alone, i.e. without seeing the original.</p>
+                <p>Your task is to rate the performance of the player, i.e. how well and creatively you think the player described the pattern.</p>
+                <p> You can rate a player's performance on a scale from 0 (very poor description) to 5 (very good description).</p>
+                <br>
+                <button type="button" name="button"; onclick="clickStart('page3','page4')"; >Start task</button>  
+                </div>
+
+                <div id="page4" style="display:none">
+                <br>
+                <p><b><font color="blue">Rate the performance of players in a description game</font></b><p>
+                  <div id="explainshow" style="display:block">
+                  <p><b>I.</b> Below you see pattern and a description of that pattern. The description has been written by a player taking part in a game. You have to rate how well the description characterizes the pattern, i.e. how well the player did.</p>
+                  <p><b>II.</b> You can use the slider to indicate how well you think the player described the pattern (0=very poor description,  5=very good description).</p>
+                  <p><b>III.</b> There will be 50 trials in total.</p>
+                  <font color="black">
+                  <button type="button" name="button"; onclick="clickStart('explainshow','explainhide')"; >Hide guidelines</button>
+                  </div>
+                  <br>
+                  <div id="explainhide" style="display:none">
+                  <button type="button" name="button"; onclick="clickStart('explainhide','explainshow')"; >Show guidelines</button>
+                  </div>
+                  <br>
+                  <center>
+                  <b><div id="remain1">Number of trials left: 50</div></b>
+                  <div style="width:600px;margin:0 auto">
+                  <div id='p1' style="display: inline"></div>
+                  <div id="slider"></div>
+                  <span id="slidervalue">0</span><br />
+                  <button type="button" name="button"; onclick="dotrial()" tyle="display: inline"; >Submit choice</button>  
+                  </center>
+                  </div>
+                  </div>
+                
+          <div id="page5" style="display:none">
+    <form id="demographics">
+        <!-- Title -->
+        <div class="row">
+          <div class="col-md-6">
+            <p>Please tell us about yourself.</p>
+          </div>
+        </div>
+        <!-- Age -->
+        <div class="row">
+          <div class="col-lg-6">
+            <h4>Age</h4>
+            <div class="input-group input-group-lg">
+              <label class="radio-inline">
+                <input type="radio" name="age" id="age1" value="18-25" />18-25
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="age" id="age2" value="26-35" />26-35
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="age" id="age3" value="36-45" />36-45
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="age" id="age4" value="46-55" />46-55
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="age" id="age5"value="56-65" />56-65
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="age" id="age6" value="66+" />66+
+              </label>
+            </div>
+          </div>
+        </div>
+        <!-- Gender -->
+        <div class="row">
+          <div class="col-lg-6">
+            <h4>Gender</h4>
+            <div class="input-group input-group-lg">
+              <label class="radio-inline">
+                <input type="radio" name="gender" id="gender2" value="female" />Female
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="gender" id="gender1" value="male" />Male
+              </label>
+            </div><!-- /input-group -->
+          </div><!-- /.col-lg-6 -->
+        </div>
+</form>
+ <br>
+                  <div style="width:50px;margin:0 auto">
+                   <button type="button" name="button"; onclick="senddata()"; >Done</button>
+                  </div>
+          </div>
+
+                <div id="page6" style="display:none">
+                <h3>Thank you for participating in our experiment.</h3>
+                <p>Your MTurk codes is: <b>ratethedescription29</b></p>
+                </div>
+
+
+               
+            </div>
+        </div>
+        <script src="js/similarity.js" charset="utf-8"></script>
+    </body>
+</html>
