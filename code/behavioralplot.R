@@ -1,3 +1,5 @@
+#Behavioral Plots
+
 #packages
 packages <- c('jsonlite', 'ForeCA',  'plyr', 'splines', 'TSclust', 'ggplot2', 'ggthemes', 'ggsignif', 'gridExtra')
 lapply(packages, library, character.only = TRUE)
@@ -10,13 +12,20 @@ d<-read.csv("data/list.csv")
 #spline function to recover drawings
 myspline<-function(x, y, xnew){
   if(length(x)>3){
+    #splines that connect all points
     isp <- interpSpline(x,y)
+    #predict
     ypred<-predict(isp,xnew)$y
+    #if smaller than 4
   } else{
+    #use polynomial regression
     dpoly<-data.frame(x=x, y=y)
+    #fit model
     m<-lm(y~poly(x,degree=(length(dpoly$x)-1)), data=dpoly)
+    #prediction
     ypred<-predict(m, newdata=data.frame(x=xnew))
   }
+  #rescale
   ypred<-ypred-min(ypred)
   ypred<-ypred/max(ypred)
   return(ypred)
@@ -77,7 +86,8 @@ data_summary <- function(x) {
 
 pd2<-position_dodge(0.1)
 
-p1<-ggplot(subset(dp,ae<50), aes(x = compositional, y = ae, fill=compositional, color=compositional))+
+#First plot: absolute error
+p1<-ggplot(dp, aes(x = compositional, y = ae, fill=compositional, color=compositional))+
   geom_dotplot(binaxis='y', stackdir='center',stackratio=1.2, dotsize=3, binwidth=0.3, position=pd2, alpha=0.5) +
   stat_summary(fun.data=data_summary, color="red")+
   theme_minimal()+ylim(c(0,51))+ theme(text = element_text(size=20,  family="sans"))+
@@ -99,10 +109,11 @@ p1<-ggplot(subset(dp,ae<50), aes(x = compositional, y = ae, fill=compositional, 
 p1
 
 
-p2<-ggplot(subset(dp,dw<5), aes(x = compositional, y = dw, fill=compositional, color=compositional))+
+#Second plot: Wavelet distance
+p2<-ggplot(dp, aes(x = compositional, y = dw, fill=compositional, color=compositional))+
   geom_dotplot(binaxis='y', stackdir='center',stackratio=1.2, dotsize=3, binwidth=0.03, position=pd2, alpha=0.5) +
   stat_summary(fun.data=data_summary, color="red")+
-  theme_minimal()+ylim(c(0,5.1))+ theme(text = element_text(size=20,  family="sans"))+
+  theme_minimal()+ylim(c(0,5))+ theme(text = element_text(size=20,  family="sans"))+
   #colors and fill
   scale_fill_manual(values = colorblind_pal()(3)[2:3])+
   scale_color_manual(values = colorblind_pal()(3)[2:3])+
@@ -121,10 +132,13 @@ p2<-ggplot(subset(dp,dw<5), aes(x = compositional, y = dw, fill=compositional, c
 p2
 
 
-
-dev<-read.csv("/home/hanshalbe/Desktop/FunctionDescriptions/evaluation.csv")
+#Plot 3: Evaluations of performance
+dev<-read.csv("data/evaluation.csv")
+#reverse scoring
 dev$rating<-100-dev$evaluation
+#remap factor names
 dev$compositional<-mapvalues(dev$compositional, c("compositional", "spectral"), c("Compositional", "Non-compositional"))
+#plot everything
 p3<-ggplot(dev, aes(x = compositional, y = rating, fill=compositional, color=compositional))+
   geom_dotplot(binaxis='y', stackdir='center',stackratio=1.2, dotsize=2, binwidth=.21, position=pd2, alpha=0.5) +
   stat_summary(fun.data=data_summary, color="red")+
@@ -146,7 +160,7 @@ p3<-ggplot(dev, aes(x = compositional, y = rating, fill=compositional, color=com
 
 p3
 
-
+#save plots
 pdf("behavioral.pdf", width=14.5, height=5)
 grid.arrange(p1,p2,p3, nrow=1)
 dev.off()

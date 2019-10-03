@@ -16,8 +16,11 @@ for (i in 1:length(m)){
 }
 table(sex)
 table(age)
+#remap age to numeric
 age<-as.numeric(mapvalues(age, unique(age), c(25,40,60,20,40)))
+#mean
 mean(age)
+#standard error
 sd(age)
 
 #spline function
@@ -61,6 +64,7 @@ for (idn in 1:length(mj)){
   }
 }
 
+#raw memory data
 dp<-data.frame(id, pid, ae, ran, dw)
 
 #get mean wavelet distance per function id

@@ -128,7 +128,7 @@ dpattern<-rbind(dlin, dper, drbf)
 dpattern$pattern<-rep(c('lin', 'per', 'rbf'), each=10)
 
 #get experimental data
-dat<-read.csv("//home/hanshalbe/Desktop/FunctionDescriptions/data/2018-march-29-export_responses.csv")
+dat<-read.csv("data/2018-march-29-export_responses.csv")
 
 #mark compositions
 dat$comp<-ifelse(dat$plot_number>19, 1, 0)
@@ -236,7 +236,7 @@ p1<-ggplot(data=dpattern, aes(x=word, y=diff, col=Composition, fill=Composition,
 p1
 
 #read in data again
-dat<-read.csv("/home/hanshalbe/Desktop/FunctionDescriptions/data/2018-march-29-export_responses.csv")
+dat<-read.csv("data/2018-march-29-export_responses.csv")
 
 #initialize data frame
 dd<-data.frame(id=numeric(), pid=numeric(), mark=numeric(), desc=numeric())

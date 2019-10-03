@@ -1,0 +1,73 @@
+# Communicating compositional functions
+####  Repository for "Communicating compositional functions"
+####  Schulz, Quiroga and Gershman
+####  We highlight the most important parts below
+
+## A: Experiments
+
+<a name="walkthroughs"></a>
+**EXP_Describe_Pattern**: Experiment 1 in which participants had to describe different patterns.
+
+<a name="walkthroughs"></a>
+**EXP_Draw_Pattern**: Experiment 2 in which participants had to draw patterns based on the descriptions from Experiment 1.
+
+<a name="walkthroughs"></a>
+**EXP_Rate_Quality**: Experiment 3 in which participants had to rate the drawings elicited in Experiment 2.
+
+<a name="walkthroughs"></a>
+**EXP_Draw_Without_Description**: Experiment 4 in which participants had to redraw patterns without description. This experiment is used to control for memory effects in our analysis of Experiments 1-2.
+
+<a name="walkthroughs"></a>
+**EXP_Components_Only**: Experiment 5 in which participants had to describe patterns of invdividual components, i.e. RBF, Periodic, and Linear.
+
+<a name="walkthroughs"></a>
+**EXP_Validating_Ranking**: Experiment 6 in which we validated the judgements of our two independent raters.
+
+## B: Data
+
+<a name="data"></a>
+**Data**: This folder contains all necessary data to reproduce our results. The most important files here are probably: "allmodels.csv" which contains all error measures as well as the likelihood predictions for both the compostional (nlc) and non-compositional (nls) models; "quality.csv" which contains the results of the ratings as well as the predicted likelihoods under the compositional and non-compositional model; "2018-march-29-export_responses.csv" which are the raw results of the descriptions; and "2018-april-13-export_responses.csv" which contains the raw results of the drawings.
+
+
+## C: Paper
+
+<a name="paper"></a>
+**Paper**: This folder contains all the neccessary materials to fully reproduce our paper. In particular, it contains all plots, the tex and bib-files, as well as the necessary files to set up the Open Mind PDF style.
+
+## D: Code
+
+<a name="code"></a>
+**Code**: This folder contains all the necessary code to reproduce our results. Note that this code should be run in the folder "function_communication" and NOT in this subfolder, so please set your working directory correctly.
+
+<a name="code"></a>
+**behavioralplot.R**: This R-code runs through the raw data and reproduces the plots and behavioral tests for our first figure, showing the abosulte error, wavelet distance error, and differences in ratings.
+
+<a name="code"></a>
+**controlledexperiment.R**: This R-code compares our main results to a model that is only based on how memorable the different patterns where, where the measure of memorizability was derived from EXP_Draw_Without_Description.
+
+<a name="code"></a>
+**drawnfunctionlikelihoods.m**: This Matlab code uses the kernels to evaluates the redrawn patterns based on their likelihood after the kernels were fitted to the original patterns. This was used to evaluate the ratings of participants' pattern elicited in EXP_Rate_Quality
+
+<a name="code"></a>
+**full_compositional.ipynb**: IPython notebook showing a walk-through of the fully compositional model. Running this code requires GPFlow. Note that this can run for a while on a standard laptop!
+
+<a name="code"></a>
+**languageanalysis.R**: Analyzing description of patterns by mapping them onto the descriptions of single components elicited in EXP_Components_Only.
+
+<a name="code"></a>
+**lesioning.R**: This R-code compares our main compositional model to variants where different kernels have been lesioned, to assess if all components are needed.
+
+<a name="code"></a>
+**maternlikelihoods.m**: This Matlab-code fits different Matern kernels to the original patterns. This was to derive different likelihood measures based on various levels of smoothness (different dfs in the Matern kernel) and compare them with the compositional model.
+
+<a name="code"></a>
+**modelcomparison.R**: This R-code is probably the most important part of the project, since it compares compositional vs. non-compositional patterns first, and then how well the models do explaining error and ratings. All comparisons are based on maximal models following Roger Levy's adivse and Bayes factors are calculated using bridge sampling, as implemented in brms. Note that running some of these models might take a while, especially the ones with many random effects.
+
+<a name="code"></a>
+**shownfunctionlikelihoods.m**: This Matlab-code runs a full a priori parse of all compositional components on the shown function. It's a more clunky implementation of what can also be done in GPflow.
+
+<a name="code"></a>
+**wordanalysis.R**: Analyzing description of patterns. This looks at the used words (after filtering out filler words etc.) of the compositional and non-compositional descriptions, their frequency as well as lexical diversity. Ultimately, this code leads up to Figure 2.
+
+
+
